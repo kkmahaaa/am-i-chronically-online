@@ -1,0 +1,51 @@
+Act as a Senior Full-Stack Engineer and Data Scientist. We are building a project called "Am I Chronically Online?" over a strict 3-week timeline.
+
+## Project Goal
+A web application that allows users to manually enter their daily screen time data, analyzes their usage habits using Python/Pandas, and visualizes the results on a Next.js dashboard. The goal is to demonstrate a "Fusion" of Data Science (Analysis) and Software Engineering (API/Frontend).
+
+## Tech Stack (Strict Constraints)
+1.  **Backend:** Python 3.9+, FastAPI, Pandas, NumPy.
+2.  **Frontend:** Next.js (React), Tailwind CSS, Recharts (for visualization), Lucide React (icons).
+3.  **Deployment:** Vercel (This requires a specific folder structure where the Python API lives in an `/api` directory for Serverless functions).
+
+## Data Entry Model
+- **Format:** Daily entries (users enter data at the end of each day)
+- **Fields per entry:** Date, App Name, Time Spent (hours/minutes), Category (optional - user can select or auto-categorized), Pickups (optional - number of times app was opened)
+- **Categorization:** Both auto-categorization (based on app name patterns) and manual category selection
+- **Storage:** Process on-the-fly initially, structured to easily add database storage later
+
+## The 3-Week Execution Plan
+Do not generate all code at once. Guide me through this phase by phase.
+
+### Phase 1: The Data Engine (Week 1)
+* **Objective:** Build the core logic to process manual daily entries and calculate metrics.
+* **Tasks:**
+    * Set up the project directory structure (monorepo style for Vercel).
+    * Create `api/processing.py`.
+    * Write Pandas functions to process daily screen time entries (list of entries with date, app, time, category, pickups).
+    * Implement auto-categorization logic (pattern matching for app names to detect Social Media, Productivity, etc.).
+    * Calculate key metrics: Total Screen Time, "Doomscroll" hours (Social Media sum), Pickup Frequency, and daily/weekly trends.
+
+### Phase 2: The API Layer (Week 2)
+* **Objective:** Wrap the logic in a REST API.
+* **Tasks:**
+    * Set up FastAPI in `api/index.py`.
+    * Create a POST endpoint `/api/entries` that accepts daily screen time entries (JSON array).
+    * Create a GET endpoint `/api/analytics` that calculates and returns metrics from stored/processed entries.
+    * Connect the endpoints to the Phase 1 processing logic.
+    * Return a clean JSON response optimized for the frontend.
+
+### Phase 3: The Frontend & Deploy (Week 3)
+* **Objective:** Build the UI and ship to Vercel.
+* **Tasks:**
+    * Initialize Next.js.
+    * Create a manual data entry form component (date picker, app name input, time input, category selector, pickups input).
+    * Create a Dashboard view using Recharts to visualize the analytics from the API (daily trends, category breakdown, doomscroll hours, etc.).
+    * Configure `vercel.json` for Python/Next.js hybrid deployment.
+
+## Your Instructions
+1.  **Folder Structure:** detailed folder structure for a Vercel Python + Next.js app before writing code.
+2.  **Step-by-Step:** Give me the code for **Phase 1** only. Once I confirm it works, move to Phase 2.
+3.  **Explainability:** Briefly explain *why* you are choosing specific methods (e.g., "Using Pandas here for vectorization speed").
+
+**Current Approach:** Manual daily data entry with auto + manual categorization.
