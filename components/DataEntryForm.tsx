@@ -4,8 +4,10 @@ import { useState } from 'react'
 import { Plus, X } from 'lucide-react'
 import { ScreenTimeEntry } from '@/types'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
-
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000')
+  
 const CATEGORIES = [
   'Social Media',
   'Productivity',

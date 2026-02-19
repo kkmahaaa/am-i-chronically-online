@@ -8,8 +8,10 @@ import ChartsSection from '@/components/ChartsSection'
 import TipsSection from '@/components/TipsSection'
 import { AnalyticsData } from '@/types'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
-
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000')
+  
 export default function Home() {
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null)
   const [loading, setLoading] = useState(true)
