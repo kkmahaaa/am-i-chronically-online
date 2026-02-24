@@ -196,20 +196,3 @@ async def testing():
         "success": True,
         "message": "Testing endpoint — API is working!",
     }
-
-# Vercel serverless function handler
-# Why: Vercel expects a handler function that takes (event, context)
-# Mangum adapter converts ASGI (FastAPI) to AWS Lambda format that Vercel uses
-def handler(event, context):
-    """Vercel serverless function handler."""
-    try:
-        from mangum import Mangum
-        asgi_handler = Mangum(app)
-        return asgi_handler(event, context)
-    except ImportError:
-        # Fallback for local development
-        # In production, Vercel will handle this automatically
-        return {
-            "statusCode": 200,
-            "body": "FastAPI app initialized. Use uvicorn for local development."
-        }
