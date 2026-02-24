@@ -31,7 +31,13 @@ export default function Home() {
       const data = await response.json()
       setAnalytics(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error')
+      const message = err instanceof Error ? err.message : 'Unknown error'
+      const isNetworkError = message === 'Failed to fetch' || message.includes('NetworkError')
+      setError(
+        isNetworkError
+          ? `Could not reach the API at ${API_BASE_URL}. Start the backend with: uvicorn api.index:app --reload --port 8000`
+          : message
+      )
       console.error('Error fetching analytics:', err)
     } finally {
       setLoading(false)
