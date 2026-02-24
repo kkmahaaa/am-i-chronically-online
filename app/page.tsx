@@ -9,8 +9,7 @@ import TipsSection from '@/components/TipsSection'
 import { AnalyticsData } from '@/types'
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000')
+  process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000'
   
 export default function Home() {
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null)
@@ -24,6 +23,10 @@ export default function Home() {
       const response = await fetch(`${API_BASE_URL}/api/analytics`)
       if (!response.ok) {
         throw new Error('Failed to fetch analytics')
+      }
+      const contentType = response.headers.get('content-type')
+      if (!contentType?.includes('application/json')) {
+        throw new Error('API returned non-JSON. Is the backend running at ' + API_BASE_URL + '?')
       }
       const data = await response.json()
       setAnalytics(data)

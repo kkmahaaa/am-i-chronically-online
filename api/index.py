@@ -186,6 +186,17 @@ async def clear_entries(user_id: str = "default_user"):
     }
 
 
+@app.get("/api/testing")
+@app.get("/testing")  # Handles path when /api is stripped (e.g. some serverless invocations)
+async def testing():
+    """
+    Testing endpoint. Visit in browser to confirm the API is responding.
+    """
+    return {
+        "success": True,
+        "message": "Testing endpoint — API is working!",
+    }
+
 # Vercel serverless function handler
 # Why: Vercel expects a handler function that takes (event, context)
 # Mangum adapter converts ASGI (FastAPI) to AWS Lambda format that Vercel uses

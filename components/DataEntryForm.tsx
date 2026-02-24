@@ -5,8 +5,7 @@ import { Plus, X } from 'lucide-react'
 import { ScreenTimeEntry } from '@/types'
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000')
+  process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000'
   
 const CATEGORIES = [
   'Social Media',
@@ -89,8 +88,17 @@ export default function DataEntryForm({ onSuccess }: DataEntryFormProps) {
       })
 
       if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.detail || 'Failed to submit entries')
+        let message = 'Failed to submit entries'
+        try {
+          const contentType = response.headers.get('content-type')
+          if (contentType?.includes('application/json')) {
+            const errorData = await response.json()
+            message = errorData.detail || message
+          }
+        } catch {
+          // response was not JSON (e.g. HTML error page)
+        }
+        throw new Error(message)
       }
 
       setSuccess(true)
