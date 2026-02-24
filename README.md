@@ -1,4 +1,4 @@
-# Am I Chronically Online? 📱
+# Am I Chronically Online?
 
 A web application that analyzes daily screen time habits through manual data entry, calculating key metrics like total screen time, "doomscroll" hours, and pickup frequency.
 
